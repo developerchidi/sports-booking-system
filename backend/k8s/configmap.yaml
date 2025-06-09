@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sports-booking-config
+data:
+  NODE_ENV: "production"
+  REDIS_HOST: "redis"
+  REDIS_PORT: "6379"
+  RATE_LIMIT_WINDOW_MS: "900000"
+  RATE_LIMIT_MAX: "100" 

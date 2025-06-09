@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sentry
+  namespace: sentry
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sentry
+  template:
+    metadata:
+      labels:
+        app: sentry
+    spec:
+      serviceAccountName: sentry
+      containers:
+      - name: sentry
+        image: getsentry/sentry:latest
+        ports:
+        - containerPort: 9000
+        env:
+        - name: SENTRY_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: sentry-secrets
+              key: secret-key
+        - name: SENTRY_POSTGRES_HOST
+          value: postgres
+        - name: SENTRY_POSTGRES_PORT
+          value: "5432"
+        - name: SENTRY_POSTGRES_DB
+          value: sentry
+        - name: SENTRY_POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: sentry-secrets
+              key: postgres-user
+        - name: SENTRY_POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: sentry-secrets
+              key: postgres-password
+        - name: SENTRY_REDIS_HOST
+          value: redis
+        - name: SENTRY_REDIS_PORT
+          value: "6379"
+        volumeMounts:
+        - name: sentry-data
+          mountPath: /var/lib/sentry/files
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "256Mi"
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 9000
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 9000
+          initialDelaySeconds: 15
+          timeoutSeconds: 1
+      volumes:
+      - name: sentry-data
+        persistentVolumeClaim:
+          claimName: sentry-data 

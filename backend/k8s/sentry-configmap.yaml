@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sentry-config
+  namespace: sports-booking
+data:
+  config.yml: |
+    sentry:
+      dsn: ${SENTRY_DSN}
+      environment: production
+      tracesSampleRate: 1.0
+      debug: false
+      integrations:
+        - new Sentry.Integrations.Http({ tracing: true })
+        - new Sentry.Integrations.Express()
+        - new Sentry.Integrations.Mongo()
+        - new Sentry.Integrations.Redis()
+      beforeSend(event) {
+        if (event.exception) {
+          event.tags = {
+            ...event.tags,
+            'error.type': event.exception.values[0].type,
+            'error.value': event.exception.values[0].value,
+          };
+        }
+        return event;
+      } 

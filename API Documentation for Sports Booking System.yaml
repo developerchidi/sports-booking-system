@@ -1,0 +1,144 @@
+```yaml
+    openapi: 3.0.3
+    info:
+      title: Sports Booking System API
+      version: 1.0.0
+    paths:
+      /register:
+        post:
+          summary: Register a new user
+          requestBody:
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                    password:
+                      type: string
+                    name:
+                      type: string
+                    phone:
+                      type: string
+                    role:
+                      type: string
+                      enum: [client, owner, admin]
+          responses:
+            '201':
+              description: User created
+            '400':
+              description: Invalid input
+      /login:
+        post:
+          summary: User login
+          requestBody:
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                    password:
+                      type: string
+          responses:
+            '200':
+              description: JWT token returned
+            '401':
+              description: Unauthorized
+      /courts:
+        get:
+          summary: Search courts
+          parameters:
+            - name: page
+              in: query
+              schema:
+                type: integer
+            - name: limit
+              in: query
+              schema:
+                type: integer
+            - name: location
+              in: query
+              schema:
+                type: string
+            - name: sport
+              in: query
+              schema:
+                type: string
+          responses:
+            '200':
+              description: List of courts
+      /bookings:
+        post:
+          summary: Create a booking
+          requestBody:
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    courtId:
+                      type: string
+                    userId:
+                      type: string
+                    startTime:
+                      type: string
+                      format: date-time
+                    endTime:
+                      type: string
+                      format: date-time
+          responses:
+            '201':
+              description: Booking created
+            '400':
+              description: Invalid input
+            '404':
+              description: Court or user not found
+      /payments:
+        post:
+          summary: Process payment
+          requestBody:
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    bookingId:
+                      type: string
+                    amount:
+                      type: number
+                    method:
+                      type: string
+                      enum: [VNPay, Momo]
+          responses:
+            '201':
+              description: Payment URL returned
+            '400':
+              description: Invalid input
+      /reviews:
+        post:
+          summary: Create a review
+          requestBody:
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    courtId:
+                      type: string
+                    userId:
+                      type: string
+                    rating:
+                      type: integer
+                      minimum: 1
+                      maximum: 5
+                    comment:
+                      type: string
+          responses:
+            '201':
+              description: Review created
+            '400':
+              description: Invalid input
+    ```

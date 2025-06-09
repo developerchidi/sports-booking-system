@@ -1,0 +1,175 @@
+Cảm ơn bạn và Cursor AI đã thống nhất và sẵn sàng bắt đầu dự án "Quản lý và đặt sân thể thao"! Tôi rất vui khi thấy sự đồng thuận và động lực để triển khai ngay. Với vai trò cố vấn, quản lý dự án (PM), và phân tích nghiệp vụ (BA), tôi đồng ý với đề xuất của Cursor AI: **bắt đầu với việc thiết lập GitHub repository và backend** như kế hoạch ban đầu, đồng thời chuẩn bị **prototype Figma** song song để hỗ trợ phát triển giao diện trong Tuần 3 (giao diện tìm kiếm sân, form đặt sân, dashboard quản lý sân). Dưới đây là phản hồi chi tiết, xác nhận kế hoạch, và hướng dẫn để tiến hành.
+
+---
+
+### 1. **Trả lời câu hỏi của Cursor AI**
+Bạn và Cursor AI hỏi: *Bạn có muốn tôi yêu cầu Grok 3 chuẩn bị prototype Figma không? Hoặc chúng ta sẽ tập trung vào việc thiết lập cấu trúc dự án trước?*
+
+**Trả lời**:
+- **Ưu tiên hiện tại**: Tôi đồng ý **tập trung vào việc thiết lập GitHub repository và backend trước** (Tuần 1, 09-13/06/2025) để đảm bảo nền tảng kỹ thuật vững chắc. Đây là bước quan trọng để triển khai API cốt lõi (đặt sân, tìm kiếm sân) trong Tuần 2.
+- **Prototype Figma**: Tôi sẽ chuẩn bị prototype Figma song song trong Tuần 1 (09-11/06/2025) để hỗ trợ phát triển giao diện (frontend và mobile) trong Tuần 3. Prototype sẽ bao gồm:
+  - **Giao diện tìm kiếm sân**: Search bar, danh sách sân dạng card, bộ lọc (location, sport, price range).
+  - **Giao diện đặt sân**: Form đặt sân, calendar picker, thanh toán.
+  - **Dashboard quản lý sân**: Danh sách sân, lịch trống, xác nhận/hủy booking.
+- **Kế hoạch tích hợp**: Prototype Figma sẽ được cung cấp trước 12/06/2025 để Cursor AI tham khảo khi bắt đầu phát triển giao diện (Tuần 3).
+
+---
+
+### 2. **Kế hoạch hành động Tuần 1 (09-14/06/2025)**
+#### **Mục tiêu**
+- **Bước 1**: Thiết lập GitHub repository, push cấu trúc thư mục, README.md, .gitignore (09-10/06/2025).
+- **Bước 2**: Cấu hình backend (Express.js, MongoDB, Redis, Sentry) (11-13/06/2025).
+- **Song song**: Tôi chuẩn bị prototype Figma cho giao diện (hoàn thành trước 12/06/2025).
+
+#### **Bước 1: Thiết lập GitHub Repository (09-10/06/2025)**
+- **Tôi (Grok)**:
+  - Cung cấp lại prompt chi tiết (đã được thống nhất):
+    ```
+    Thiết lập GitHub repository cho dự án "Sports Booking System":
+    1. Tạo repository mới trên GitHub với tên "sports-booking-system" (public hoặc private tùy bạn quyết định).
+    2. Khởi tạo repository với:
+       - File .gitignore (dùng template Node.js từ GitHub).
+       - File README.md với nội dung:
+         - Tên dự án: Sports Booking System.
+         - Mô tả ngắn: Hệ thống quản lý và đặt sân thể thao cho web và mobile.
+         - Prerequisites: Node.js v16+, MongoDB, Redis.
+         - Hướng dẫn chạy local (backend, frontend, mobile) - dùng placeholder nếu chưa hoàn thiện.
+    3. Thiết lập branching strategy:
+       - Tạo branch `main` (default).
+       - Tạo branch `develop`.
+       - Thiết lập branch protection cho `main` (yêu cầu PR và ít nhất 1 review).
+    4. Push cấu trúc thư mục cơ bản:
+       /sports-booking-system
+         ├── /backend
+         ├── /frontend
+         ├── /mobile
+         ├── README.md
+         ├── .gitignore
+    5. Tạo file .gitignore với nội dung:
+       node_modules/
+       *.env
+       *.log
+       dist/
+       build/
+    6. Commit với message: "Initial project structure and setup".
+    Trả về:
+       - URL repository (ví dụ: https://github.com/username/sports-booking-system).
+       - Cấu trúc thư mục đã push.
+       - Nội dung file README.md.
+       - Log xác nhận push (hoặc screenshot GitHub repo).
+    ```
+  - Review repository ngay khi Cursor AI cung cấp URL (trước 11/06/2025, 14:25 +07).
+  - Cung cấp feedback trong vòng 24 giờ.
+
+- **Cursor AI**:
+  - Tạo repository "sports-booking-system" ngay hôm nay (09/06/2025).
+  - Thiết lập branch `main` và `develop`, cấu hình branch protection.
+  - Push cấu trúc thư mục (`/backend`, `/frontend`, `/mobile`, `README.md`, `.gitignore`).
+  - Commit với message: "Initial project structure and setup".
+  - Trả về URL repository và log xác nhận push trước 23:59, 10/06/2025.
+  - **Lưu ý**: Nếu muốn repo private, hãy xác nhận. Nếu không, tôi giả định repo public.
+
+#### **Bước 2: Cấu hình Backend (11-13/06/2025)**
+- **Tôi (Grok)**:
+  - Cung cấp prompt chi tiết cho backend setup vào tối 10/06/2025 (sẽ dựa trên artifact trước đó).
+  - Bao gồm:
+    - Thiết lập Express.js server.
+    - Kết nối MongoDB (Mongoose) và Redis.
+    - Cấu hình Sentry và Winston logger.
+    - Tạo model `User.js` và các model khác (`Court.js`, `Booking.js`, `Payment.js`, `Review.js`).
+  - Kiểm tra code từ Cursor AI, đảm bảo kết nối MongoDB/Redis/Sentry hoạt động.
+
+- **Cursor AI**:
+  - Chờ prompt backend từ tôi (10/06/2025).
+  - Triển khai backend setup, test local, commit lên branch `feature/setup-backend` trước 13/06/2025.
+  - Trả về log kết nối (MongoDB, Redis) và screenshot Sentry dashboard (nếu có).
+
+#### **Song song: Chuẩn bị prototype Figma (09-12/06/2025)**
+- **Tôi (Grok)**:
+  - Thiết kế prototype Figma cho các giao diện:
+    - **Giao diện tìm kiếm sân**:
+      - Search bar nổi bật (input: location, sport, date).
+      - Danh sách sân dạng card (hình ảnh, tên, giá, rating 1-5 sao).
+      - Bộ lọc (dropdown hoặc slider cho location, sport, price range).
+      - Màu sắc: Xanh dương (#1E90FF), trắng (#FFFFFF), xám nhạt (#F5F5F5).
+      - Font: Roboto hoặc Inter.
+    - **Giao diện đặt sân**:
+      - Form đặt sân (courtId, startTime, endTime).
+      - Calendar picker (dùng react-datepicker hoặc tương tự).
+      - Nút thanh toán (tích hợp VNPay/Momo).
+    - **Dashboard quản lý sân**:
+      - Danh sách sân (tên, địa chỉ, giá).
+      - Lịch trống (calendar view).
+      - Nút xác nhận/hủy booking.
+  - **Artifact Figma** (dự kiến hoàn thành 12/06/2025):
+    
+    ```
+    Figma URL: https://www.figma.com/file/xxx/sports-booking-system (replace with actual URL)
+
+    Pages:
+    1. Search Page:
+       - Search bar: Input fields (location, sport, date)
+       - Filters: Dropdown (location, sport, price range)
+       - Court cards: Image (lazy-loaded), Name, Address, Price, Rating (5 stars)
+       - Colors: Blue (#1E90FF), White (#FFFFFF), Gray (#F5F5F5)
+       - Font: Roboto
+    2. Booking Page:
+       - Form: Court name, Date picker, Time picker
+       - Payment button: VNPay/Momo
+       - Colors: Consistent with Search Page
+    3. Owner Dashboard:
+       - Court list: Table (Name, Address, Price)
+       - Calendar: Available slots
+       - Actions: Confirm/Cancel booking buttons
+       - Colors: Consistent with Search Page
+    ```
+    
+  - Cung cấp Figma URL trước 12/06/2025 để Cursor AI tham khảo khi phát triển giao diện.
+
+- **Cursor AI**:
+  - Chờ Figma prototype để triển khai frontend/mobile (Tuần 3).
+  - Nếu cần điều chỉnh giao diện (ví dụ: thêm tính năng, thay đổi màu sắc), báo ngay để tôi cập nhật prototype.
+
+---
+
+### 3. **Timeline Tuần 1 (09-14/06/2025)**
+- **09-10/06/2025 (Ngày 1-2)**:
+  - **Cursor AI**: Tạo GitHub repo, push cấu trúc thư mục, README.md, .gitignore. Trả về URL repo trước 23:59, 10/06/2025.
+  - **Grok**: Review repo, cung cấp feedback trong 24 giờ.
+- **11-13/06/2025 (Ngày 3-5)**:
+  - **Cursor AI**: Cấu hình backend (Express.js, MongoDB, Redis, Sentry), commit lên `feature/setup-backend`.
+  - **Grok**: Cung cấp prompt backend vào tối 10/06/2025, review code backend.
+- **14/06/2025 (Ngày 6)**:
+  - **Cursor AI**: Hoàn thiện PR, merge vào `develop`.
+  - **Grok**: Review PR, chuẩn bị prompt cho API đặt sân (Tuần 2).
+- **Song song (09-12/06/2025)**:
+  - **Grok**: Thiết kế prototype Figma, cung cấp URL trước 12/06/2025.
+
+---
+
+### 4. **Rủi ro và giải pháp**
+- **Rủi ro 1: Lỗi tạo GitHub repository**:
+  - **Giải pháp**: Đảm bảo tài khoản GitHub có quyền tạo repo. Tôi có thể cung cấp template repo nếu cần (liên hệ ngay nếu có vấn đề).
+- **Rủi ro 2: Thiếu thông tin trong README.md**:
+  - **Giải pháp**: Dùng artifact trên làm tham khảo, bổ sung placeholder cho các phần chưa hoàn thiện.
+- **Rủi ro 3: Prototype Figma không đáp ứng kỳ vọng**:
+  - **Giải pháp**: Tôi sẽ chia sẻ mockup sơ bộ (text-based) trước khi hoàn thiện Figma để bạn và Cursor AI xác nhận.
+
+---
+
+### 5. **Kết luận và xác nhận**
+Chúng ta đã sẵn sàng để **bắt đầu ngay hôm nay (09/06/2025, 14:25 +07)** với **Bước 1: Thiết lập GitHub Repository**. Cursor AI có thể triển khai theo prompt và artifact đã cung cấp, với mục tiêu hoàn thành trước 23:59, 10/06/2025. Song song đó, tôi sẽ bắt đầu thiết kế **prototype Figma** và cung cấp trước 12/06/2025 để hỗ trợ phát triển giao diện.
+
+**Hành động ngay**:
+- **Cursor AI**:
+  - Tạo GitHub repository "sports-booking-system" ngay hôm nay (09/06/2025).
+  - Push cấu trúc thư mục, README.md, .gitignore trước 23:59, 10/06/2025.
+  - Trả về URL repository và log xác nhận push (hoặc screenshot GitHub repo).
+- **Tôi (Grok)**:
+  - Review repo trong vòng 24 giờ (trước 11/06/2025, 14:25 +07).
+  - Chuẩn bị prototype Figma (hoàn thành trước 12/06/2025).
+  - Cung cấp prompt cho backend setup vào tối 10/06/2025.
+
+**Xác nhận**: Tôi đồng ý với kế hoạch và không có yêu cầu điều chỉnh thêm. Nếu bạn hoặc Cursor AI có bất kỳ yêu cầu bổ sung (ví dụ: repo private, tên repo khác, chi tiết giao diện cụ thể), hãy xác nhận ngay. Nếu không, Cursor AI có thể bắt đầu tạo GitHub repo ngay bây giờ!
+
+**Let’s make it happen!** 🚀 Hãy cho tôi biết nếu bạn sẵn sàng để Cursor AI bắt đầu, và chúng ta sẽ cùng đẩy nhanh tiến độ!

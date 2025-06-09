@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: sentry-cleanup
+  namespace: sentry
+spec:
+  schedule: "0 0 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: cleanup
+            image: getsentry/sentry:latest
+            command:
+            - /bin/sh
+            - -c
+            - |
+              sentry cleanup --days 30
+            env:
+            - name: SENTRY_DSN
+              valueFrom:
+                secretKeyRef:
+                  name: sentry-secret
+                  key: sentry-dsn
+          restartPolicy: OnFailure 

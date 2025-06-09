@@ -1,0 +1,33 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: sports-booking-backup
+  namespace: sports-booking
+spec:
+  schedule: "0 0 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: backup
+            image: mongo:4.4
+            command:
+            - /bin/sh
+            - -c
+            - |
+              mongodump --uri=$MONGODB_URI --out=/backup/$(date +%Y%m%d)
+            env:
+            - name: MONGODB_URI
+              valueFrom:
+                secretKeyRef:
+                  name: sports-booking-secrets
+                  key: mongodb-uri
+            volumeMounts:
+            - name: backup-volume
+              mountPath: /backup
+          volumes:
+          - name: backup-volume
+            persistentVolumeClaim:
+              claimName: sports-booking-data
+          restartPolicy: OnFailure 
